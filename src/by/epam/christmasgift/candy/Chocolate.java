@@ -8,8 +8,8 @@ public class Chocolate  extends Candy {
     private StuffingType stuffingType;
 
     public Chocolate(int protein, int fat, int carbohydrate, int kiloCalories,
-                     int weight, int sugarContent, ChocolateType chocolateType,
-                     StuffingType stuffingType) {
+                      int weight, int sugarContent, ChocolateType chocolateType,
+                      StuffingType stuffingType) {
         super(protein, fat, carbohydrate, kiloCalories, weight, sugarContent);
         this.chocolateType = chocolateType;
         this.stuffingType = stuffingType;

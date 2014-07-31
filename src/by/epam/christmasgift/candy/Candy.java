@@ -1,9 +1,12 @@
 package by.epam.christmasgift.candy;
 
+import org.apache.log4j.Logger;
+
 /**
  * Created by Vika on 25.07.2014.
  */
 public abstract class Candy {
+    protected static Logger logger = Logger.getLogger(Candy.class);
     private int protein;
     private int fat;
     private int carbohydrate;
@@ -13,16 +16,13 @@ public abstract class Candy {
 
     protected Candy(int protein, int fat, int carbohydrate, int kiloCalories,
                     int weight, int sugarContent) {
+        logger.info("Creating Candy");
         setProtein(protein);
         setFat(fat);
         setCarbohydrate(carbohydrate);
         setKiloCalories(kiloCalories);
         setWeight(weight);
         setSugarContent(sugarContent);
-    }
-
-    public int getProtein() {
-        return protein;
     }
 
     private void setProtein(int protein) {
@@ -33,20 +33,12 @@ public abstract class Candy {
         }
     }
 
-    public int getFat() {
-        return fat;
-    }
-
     private void setFat(int fat) {
         if (fat > 0) {
             this.fat = fat;
         } else {
             throw new IllegalArgumentException();
         }
-    }
-
-    public int getCarbohydrate() {
-        return carbohydrate;
     }
 
     private void setCarbohydrate(int carbohydrate) {
@@ -57,20 +49,12 @@ public abstract class Candy {
         }
     }
 
-    public int getKiloCalories() {
-        return kiloCalories;
-    }
-
     private void setKiloCalories(int kiloCalories) {
         if (kiloCalories > 0) {
             this.kiloCalories = kiloCalories;
         } else {
             throw new IllegalArgumentException();
         }
-    }
-
-    public int getWeight() {
-        return weight;
     }
 
     private void setWeight(int weight) {
@@ -81,16 +65,36 @@ public abstract class Candy {
         }
     }
 
-    public int getSugarContent() {
-        return sugarContent;
-    }
-
     private void setSugarContent(int sugarContent) {
         if ((0 < sugarContent) && (sugarContent < 100)) {
             this.sugarContent = sugarContent;
         } else {
             throw new IllegalArgumentException();
         }
+    }
+
+    public int getProtein() {
+        return protein;
+    }
+
+    public int getFat() {
+        return fat;
+    }
+
+    public int getCarbohydrate() {
+        return carbohydrate;
+    }
+
+    public int getKiloCalories() {
+        return kiloCalories;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public int getSugarContent() {
+        return sugarContent;
     }
 
     @Override

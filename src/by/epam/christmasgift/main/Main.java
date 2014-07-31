@@ -1,26 +1,36 @@
 package by.epam.christmasgift.main;
 
 import by.epam.christmasgift.candy.Candy;
-import by.epam.christmasgift.candy.Chocolate;
 import by.epam.christmasgift.candy.ChristmasGift;
-import by.epam.christmasgift.candy.Lollipop;
+import by.epam.christmasgift.logic.CandyParser;
 import by.epam.christmasgift.logic.GiftProcessor;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
+import java.io.File;
 import java.util.Comparator;
+
 
 /**
  * Created by Vika on 27.07.2014.
  */
 public class Main {
+    static {
+        PropertyConfigurator.configure("log4j.properties");
+    }
+    private static Logger logger = Logger.getLogger(Main.class.getName());
+
     public static void main(String[] args){
         ChristmasGift gift = new ChristmasGift();
-        gift.addCandy(new Chocolate(7, 20, 30, 10, 30, 11,
-                Chocolate.ChocolateType.MILK, Chocolate.StuffingType.JELLY));
-        gift.addCandy(new Lollipop(10, 30, 40, 20, 75, 45, "Cherry"));
-        gift.addCandy(new Lollipop(12, 20, 25, 50, 12, 45, "Strawberry"));
-        System.out.println(gift);
+        CandyParser candyParser = CandyParser.getInstance();
+        try {
+            gift.addCandy(candyParser.parse(new File("path")));
+        } catch (IllegalArgumentException e){
+            logger.error(e);
+        }
         GiftProcessor processor = new GiftProcessor();
-        System.out.println(processor.getWeight(gift));
+        logger.info("Weight of Gift is "+ processor.getWeight(gift));
         Comparator<Candy> comparator = new Comparator<Candy>() {
             @Override
             public int compare(Candy o1, Candy o2) {
@@ -28,7 +38,11 @@ public class Main {
             }
         };
         gift.sort(comparator);
-        System.out.println(gift);
-        System.out.println(processor.getCandyWithSugarContent(gift, 10, 40));
+        logger.info("Sorted Gift: "+ gift.toString());
+        int lowerBound = 10;
+        int upperBound = 60;
+        logger.info("Candies with sugar content between "+ lowerBound + " and "
+                + upperBound + " is "
+                + processor.getCandyWithSugarContent(gift,lowerBound,upperBound));
     }
 }

@@ -1,5 +1,7 @@
 package by.epam.christmasgift.candy;
 
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,14 +11,22 @@ import java.util.Iterator;
  * Created by Vika on 27.07.2014.
  */
 public class ChristmasGift implements Iterable<Candy> {
+    private static Logger logger = Logger.getLogger(ChristmasGift.class);
     private ArrayList<Candy> gift;
 
     public ChristmasGift() {
         gift = new ArrayList<>();
+        logger.info("Creating ChristmasGift");
     }
 
     public void addCandy(Candy candy){
         gift.add(candy);
+    }
+
+    public void addCandy(Iterable<Candy> candies){
+        for (Candy candy: candies){
+            gift.add(candy);
+        }
     }
 
     public void removeCandy(int index){
@@ -27,6 +37,9 @@ public class ChristmasGift implements Iterable<Candy> {
         return gift.get(index);
     }
 
+    public Iterable<Candy> getCandies(){
+        return Collections.unmodifiableList(gift);
+    }
     @Override
     public Iterator<Candy> iterator() {
         return gift.iterator();
@@ -34,6 +47,7 @@ public class ChristmasGift implements Iterable<Candy> {
 
     public void sort(Comparator<Candy> comparator){
         Collections.sort(this.gift,comparator);
+        logger.info("Sorting Gift");
     }
 
     @Override
